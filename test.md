@@ -1,13 +1,7 @@
 ```mermaid
-flowchart LR
-  UI[User Interface (React/Angular)] --> APP[App Server (Spring Boot/Django)]
-  APP --> DB[(RDBMS: PostgreSQL/Oracle)]
-  APP --> CACHE[Cache (Redis)]
-  DB --> REPL[Read Replica / Backup]
+graph TD
+  P[PBAR-P: Product] --> R[PBAR-R: Process]
+  R --> C[PBAR-C: Policy]
+  C --> P
 
-  %% Transactional flow (optional visual grouping)
-  subgraph Transaction
-    direction LR
-    UI --> APP --> DB
-  end
 ```
