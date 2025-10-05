@@ -65,6 +65,34 @@ graph LR
   FS --> MV3
 
 ```
+```mermaid
+sequenceDiagram
+  autonumber
+  participant U as Client
+  participant GW as API Gateway
+  participant ORD as Order Service
+  participant PAY as Payment Service
+  participant INV as Inventory Service
+  participant BUS as Event Bus
+
+  U->>GW: POST /orders (idempotency key)
+  GW->>ORD: CreateOrder
+  ORD-->>BUS: OrderCreated
+  BUS-->>PAY: OrderCreated
+  PAY->>PAY: AuthorizePayment
+  PAY-->>BUS: PaymentAuthorized
+  BUS-->>INV: PaymentAuthorized
+  INV->>INV: ReserveStock
+  INV-->>BUS: StockReserved
+  BUS-->>ORD: StockReserved
+  ORD-->>U: 202 Accepted (eventual)
+
+  PAY-->>BUS: PaymentFailed
+  BUS-->>ORD: PaymentFailed
+  ORD->>ORD: CancelOrder
+  ORD-->>BUS: OrderCancelled
+  BUS-->>INV: ReleaseReservation
+```
 
 
 ```mermaid
