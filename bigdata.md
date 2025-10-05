@@ -15,8 +15,8 @@ graph LR
 ```
 ```mermaid
 graph TD
-    A[Batch Processing<br>(Spark, Hadoop)] -->|High Latency| B[(Data Warehouse)]
-    C[Streaming Processing<br>(Flink, Kafka Streams)] -->|Low Latency| D[(Real-Time Dashboards / APIs)]
-    E[Shared Storage<br>(S3 / Delta Lake)] --> B
+    A[Batch Processing: Spark, Hadoop] -->|High Latency| B[Data Warehouse]
+    C[Streaming Processing: Flink, Kafka Streams] -->|Low Latency| D[Real-Time Dashboards or APIs]
+    E[Shared Storage: S3, Delta Lake] --> B
     E --> D
 ```
