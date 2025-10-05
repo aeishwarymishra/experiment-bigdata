@@ -48,10 +48,23 @@ graph LR
 
 
 ```
+-------------------------------------------------------------------
+ BATCH VS STREAMING TRADE-OFFS
+-------------------------------------------------------------------
 ```mermaid
+
 graph TD
-    A[Batch Processing: Spark, Hadoop] -->|High Latency| B[Data Warehouse]
-    C[Streaming Processing: Flink, Kafka Streams] -->|Low Latency| D[Real-Time Dashboards or APIs]
-    E[Shared Storage: S3, Delta Lake] --> B
+    %% Batch path
+    A[🧮 Batch Processing<br/>Spark / Hadoop] -->|High Latency<br/>Minutes to Hours| B[🏢 Data Warehouse<br/>Historical Analytics]
+    %% Streaming path
+    C[⚡ Streaming Processing<br/>Flink / Kafka Streams] -->|Low Latency<br/>Milliseconds to Seconds| D[📈 Real-Time Dashboards / APIs]
+    %% Shared storage foundation
+    E[🗄️ Shared Storage<br/>S3 / Delta Lake] --> B
     E --> D
+
+    %% Comments
+    %% Batch = periodic, throughput-focused, used for deep analytics
+    %% Streaming = continuous, latency-focused, used for instant insights
+    %% Both converge on same storage foundation (Lakehouse)
+
 ```
