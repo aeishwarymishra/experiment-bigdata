@@ -1,7 +1,9 @@
-```mermaid
 %% -------------------------------------------------------------------
 %% DATA STORAGE + PROCESSING LAYERS
 %% -------------------------------------------------------------------
+
+```mermaid
+
 graph TD
     %% Raw storage layer
     A[🏗️ Storage Layer<br/>HDFS / S3 / ADLS / OCI Object Storage]
@@ -19,13 +21,31 @@ graph TD
     %% D = delivers insights to business or ML systems
 
 ```
+%% -------------------------------------------------------------------
+%% STREAMING DATA FLOW
+%% -------------------------------------------------------------------
 
 ```mermaid
+
 graph LR
-    A[Producers: Apps, APIs, IoT, DB Streams] -->|Publish Events| B[(Kafka Topics)]
-    B -->|Stream Processing| C[Spark Structured Streaming / Flink / kSQL / Kafka Streams]
-    C -->|Processed Data| D[(S3 / Delta Lake / Data Warehouse)]
-    C -->|Enriched Stream| E[Serving APIs / Dashboards / Alerts]
+    %% Producers (event sources)
+    A[📥 Producers<br/>Apps / APIs / IoT / DB Streams]
+    %% Kafka as central event hub
+    A -->|Publish Events| B[(🌀 Kafka Topics)]
+    %% Stream processors
+    B -->|Stream Processing| C[⚙️ Stream Engines<br/>Spark Structured Streaming / Flink / kSQL / Kafka Streams]
+    %% Persistent sink
+    C -->|Processed Data| D[(💾 S3 / Delta Lake / Data Warehouse)]
+    %% Real-time consumers
+    C -->|Enriched Stream| E[📡 Serving Layer<br/>APIs / Dashboards / Alerts]
+
+    %% Comments
+    %% A = producers push data continuously
+    %% B = Kafka buffers, partitions, and stores messages durably
+    %% C = stream processors consume and enrich in-flight data
+    %% D = long-term sinks for analytics or history
+    %% E = low-latency consumers for real-time insights
+
 
 ```
 ```mermaid
