@@ -25,3 +25,10 @@ graph LR
   INV --> BUS
   PAY --> BUS
 ```
+```mermaid
+graph LR
+  P1["Order Service (Producer)"] --> T["Kafka Topic: Orders"]
+  T --> C1["Inventory Service (Consumer)"]
+  T --> C2["Analytics Engine (Consumer)"]
+  T --> C3["Notification Service (Consumer)"]
+```
