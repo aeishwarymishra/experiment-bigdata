@@ -1,8 +1,6 @@
-===============================================================
 MODERN DATA PLATFORM (END-TO-END): INGESTION → LAKEHOUSE → SERVING
 - Keep labels simple (no HTML). Comments start with %%.
 - Subgraphs group layers; edges show the main dataflows.
- ===============================================================
 ```mermaid
 
 graph TD
