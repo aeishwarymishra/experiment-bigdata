@@ -5,74 +5,38 @@ MODERN DATA PLATFORM (END-TO-END): INGESTION → LAKEHOUSE → SERVING
 ---------------------------------------------------------------
 ```mermaid
 
-graph TD
+%% LEFT TO RIGHT VARIANT
+graph LR
 
-%% ------------------------ INGESTION -----------------------------
 subgraph I[Ingestion]
-    %% Event and change data producers
-    P1[Producers: apps, APIs, IoT] --> K[(Kafka topics)]
-    P2[CDC from OLTP/ERP/CRM] --> K
-    P3[Batch loads: files, exports] --> LZ[Object storage: raw/landing]
-    %% Stream → landing zone (optional fan-out)
+    P1[Producers - apps, APIs, IoT] --> K[(Kafka topics)]
+    P2[CDC from OLTP or ERP or CRM] --> K
+    P3[Batch loads - files or exports] --> LZ[Object storage - raw or landing]
     K --> LZ
 end
 
-%% -------------------- LAKEHOUSE STORAGE -------------------------
-subgraph S[Lakehouse storage & tables]
-    %% Raw objects become managed ACID tables
-    LZ --> LT[(ACID tables: Delta/Iceberg/Hudi)]
-    %% Versioned data supports time-travel & schema evolution
+subgraph S[Lakehouse storage and tables]
+    LZ --> LT[(ACID tables - Delta or Iceberg or Hudi)]
 end
 
-%% ---------------------- PROCESSING LAYER ------------------------
-subgraph C[Compute & processing]
-    %% Batch (micro-batch ok) on managed tables
-    LT --> SB[Batch: Spark/Databricks/EMR/Glue]
-    %% True streaming on Kafka (and table streams)
-    K --> ST[Streaming: Flink/Kafka Streams]
+subgraph C[Compute and processing]
+    LT --> SB[Batch - Spark or Databricks or EMR or Glue]
+    K --> ST[Streaming - Flink or Kafka Streams]
     LT --> ST
-    %% Curated, conformed outputs (gold datasets/features)
-    SB --> CUR[(Curated tables/views)]
+    SB --> CUR[(Curated datasets or views)]
     ST --> CUR
 end
 
-%% ------------------------ SERVING LAYER -------------------------
-subgraph O[Serving & consumption]
-    %% Historical analytics & BI
-    CUR --> WH[(Warehouse/BI: dashboards, SQL)]
-    %% ML training & feature stores
-    CUR --> ML[ML training & feature store]
-    %% Low-latency products and alerts
-    ST --> RT[Real-time APIs, alerting, ops dashboards]
+subgraph O[Serving and consumption]
+    CUR --> WH[(Warehouse and BI - dashboards and SQL)]
+    CUR --> ML[ML training and feature store]
+    ST --> RT[Real time APIs and alerting and ops dashboards]
 end
 
-%% --------------------- GOVERNANCE (X-CUTTING) -------------------
-%% Catalog/lineage/policies touch all layers (shown with dashed links)
-G[Governance: catalog, lineage, RBAC, quality] -.-> I
+G[Governance - catalog and lineage and RBAC and quality] -.-> I
 G -.-> S
 G -.-> C
 G -.-> O
-
-%% ---------------------- EXPLANATORY NOTES -----------------------
-%% Ingestion:
-%%   - Kafka decouples producers/consumers; durable, replayable streams.
-%%   - Batch loads land bulk data into object storage (raw zone).
-%%
-%% Lakehouse:
-%%   - ACID table formats (Delta/Iceberg/Hudi) add transactions, schema, and time travel on top of object storage.
-%%
-%% Processing:
-%%   - Batch (Spark) = high throughput, periodic/backfills/enrichments.
-%%   - Streaming (Flink/Kafka Streams) = low latency, event-time windows, stateful ops.
-%%   - Both write into curated, conformed datasets for reuse.
-%%
-%% Serving:
-%%   - Warehouse/BI for historical insights.
-%%   - ML pipelines for training and online/offline features.
-%%   - Real-time outputs for APIs, alerts, and operational decisions.
-%%
-%% Governance:
-%%   - Central catalog + lineage + policies ensure discoverability, trust, and compliance end-to-end.
 
 ```
 
