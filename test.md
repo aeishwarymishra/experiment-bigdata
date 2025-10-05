@@ -1,6 +1,11 @@
-```mermaid
 flowchart LR
-A[User Interface (React / Angular)] --> B[App Server (Spring Boot / Django)]
-B --> C[(RDBMS: PostgreSQL / Oracle)]
-B --> D[Cache (Redis)]
-C --> E[Backup / Replication Node]
+  UI[User Interface (React/Angular)] --> APP[App Server (Spring Boot/Django)]
+  APP --> DB[(RDBMS: PostgreSQL/Oracle)]
+  APP --> CACHE[Cache (Redis)]
+  DB --> REPL[Read Replica / Backup]
+
+  %% Transactional flow (optional visual grouping)
+  subgraph Transaction
+    direction LR
+    UI --> APP --> DB
+  end
