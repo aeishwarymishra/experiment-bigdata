@@ -164,14 +164,16 @@ graph LR
 From raw data to decisions
 ```mermaid
 graph LR
-  B1[User asks a question] --> B2[Intent parsed by copilot]
-  B2 --> B3[Router chooses tools]
-  B3 --> B4[Retrieve docs from vector store]
-  B4 --> B5[Fetch facts with sql on warehouse]
-  B5 --> B6[LLM composes answer with citations]
-  B6 --> B7[Show result and sql trace]
-  B7 --> B8[Offer actions create ticket send email call api]
-  B8 --> B9[Log lineage prompts and metrics]
+  A1[Scene 1 Sources arrive] --> A2[Scene 2 Ingest batch or streams]
+  A2 --> A3[Scene 3 Land into lake or lakehouse]
+  A3 --> A4[Scene 4 Transform and model with spark or sql]
+  A4 --> A5[Scene 5 Build features and embeddings]
+  A5 --> A6[Scene 6 GenAI retrieves with rag]
+  A6 --> A7[Scene 7 LLM reasons and drafts]
+  A7 --> A8[Scene 8 Serve via api copilot or app]
+  A8 --> A9[Scene 9 Human reviews and approves]
+  A9 --> A10[Scene 10 Action taken notify or automate]
+
 ```
 RAG query to answer to action
 ```mermaid
