@@ -128,3 +128,36 @@ graph TD
   C6 --- L5
 
 ```
+```mermaid
+graph LR
+  U[User or Analyst] --> CP[Data Copilot Chat UI]
+  CP --> ORCH[Agent Orchestrator and Tool Router]
+
+  ORCH -->|NL2SQL| SQL[SQL Engine over Warehouse or Lakehouse]
+  ORCH -->|Retrieve| VEC[Vector Database]
+  ORCH -->|Docs| DOC[Document Store]
+  ORCH -->|Features| FST[Feature Store]
+  ORCH -->|Streams| STR[Streaming Analytics Flink or Spark]
+  ORCH -->|Functions| FX[Domain Tools and Microservices]
+
+  DOC --> VEC
+  SQL --> CP
+  VEC --> CP
+  STR --> CP
+  FST --> CP
+  FX --> CP
+
+  CP --> LLM[LLM Hosted or Custom]
+  LLM --> CP
+
+  CP --> QLT[Auto Data Quality PII Guardrails]
+  CP --> LOG[Lineage Observability Prompt Logs]
+  QLT --> IMP[Issue Register and Playbooks]
+  LOG --> CATA[Catalog Update and Auto Docs]
+  IMP --> ORCH
+
+  LLM --> SYN[Synthetic Data Generator]
+  SYN --> LAKE[Lake or Lakehouse]
+  LAKE --> RETRAIN[Fine Tune and Evaluate]
+  RETRAIN --> LLM
+```
