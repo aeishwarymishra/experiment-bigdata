@@ -161,6 +161,7 @@ graph LR
   LAKE --> RETRAIN[Fine Tune and Evaluate]
   RETRAIN --> LLM
 ```
+From raw data to decisions
 ```mermaid
 graph LR
   B1[User asks a question] --> B2[Intent parsed by copilot]
@@ -171,4 +172,27 @@ graph LR
   B6 --> B7[Show result and sql trace]
   B7 --> B8[Offer actions create ticket send email call api]
   B8 --> B9[Log lineage prompts and metrics]
+```
+RAG query to answer to action
+```mermaid
+graph LR
+  B1[User asks a question] --> B2[Intent parsed by copilot]
+  B2 --> B3[Router chooses tools]
+  B3 --> B4[Retrieve docs from vector store]
+  B4 --> B5[Fetch facts with sql on warehouse]
+  B5 --> B6[LLM composes answer with citations]
+  B6 --> B7[Show result and sql trace]
+  B7 --> B8[Offer actions create ticket send email call api]
+  B8 --> B9[Log lineage prompts and metrics]
+```
+Guardrails and Improvement loop
+```mermaid
+graph LR
+  C1[PII and data quality checks] --> C2[Policy and access control]
+  C2 --> C3[Prompt and response review]
+  C3 --> C4[Cost and performance watch]
+  C4 --> C5[Issues create playbooks]
+  C5 --> C6[Synthetic data for gaps]
+  C6 --> C7[Fine tune or eval and update]
+  C7 --> C8[Models and prompts improved]
 ```
