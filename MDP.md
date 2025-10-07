@@ -41,3 +41,11 @@ flowchart LR
   SS --> GD1["Gold Real-time (Materialized Views)"]
   SB --> GD2["Gold Batch (Marts)"]
 ```
+```mermaid
+graph TD
+A[EV Sensor Units] -->|MQTT| B[Regional IoT Gateways]
+B -->|Secure HTTP| C[Kafka Cluster (Edge Region)]
+C -->|MirrorMaker Replication| D[Central Kafka Cluster (Cloud)]
+D -->|Flink/Spark Streaming| E[Feature Store + Analytics DB]
+E -->|Dashboards / ML Models| F[BI & Realtime Insights]
+```
