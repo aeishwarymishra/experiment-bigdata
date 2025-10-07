@@ -29,3 +29,15 @@ graph TD
   classDef c fill:#fffef4,stroke:#c7c480,stroke-width:1px,color:#0d1b2a;
   class BZ b; class SV s; class GD g; class CON c;
 ```
+BATCH+STREAM INSIDE MEDALLION
+```mermaid
+flowchart LR
+  SRC["Sources"] -->|CDC / Stream| K["Kafka / Event Hub / PubSub / OCI Streaming"]
+  SRC -->|Batch| LAND["Landing Jobs"]
+  K --> BR["Bronze Stream (Append)"]
+  LAND --> BR
+  BR -->|Structured Streaming / Flink| SS["Silver Stream (Upserts)"]
+  BR -->|Spark / dbt jobs| SB["Silver Batch (Upserts)"]
+  SS --> GD1["Gold Real-time (Materialized Views)"]
+  SB --> GD2["Gold Batch (Marts)"]
+```
