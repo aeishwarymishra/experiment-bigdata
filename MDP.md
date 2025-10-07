@@ -44,9 +44,9 @@ flowchart LR
 ```mermaid
 graph TD
     A[EV Sensor Units] -->|MQTT| B[Regional IoT Gateways]
-    B -->|Secure HTTP| C[Kafka Cluster (Edge Region)]
-    C -->|MirrorMaker Replication| D[Central Kafka Cluster (Cloud)]
-    D -->|Stream Processing (Flink / Spark Streaming)| E[Feature Store & Analytics DB]
-    E -->|Dashboards / ML Models| F[BI & Realtime Insights]
+    B -->|Secure HTTP| C[Kafka Cluster - Edge Region]
+    C -->|MirrorMaker Replication| D[Central Kafka Cluster - Cloud]
+    D -->|Stream Processing: Flink / Spark Streaming| E[Feature Store & Analytics DB]
+    E -->|Dashboards & ML Models| F[BI & Real-time Insights]
 
 ```
